@@ -41,3 +41,12 @@ func LoadTemplate(path string) (t CloudFormationTemplate) {
 
 	return t
 }
+
+func (t *CloudFormationTemplate) GraphvizAttrs() (ret map[string]string) {
+	ret = map[string]string {
+		"shape": "record",
+		"label": "\"<f0> inputs | { resource 1 | 2 | 3 } | outputs\"",
+	}
+
+	return ret
+}

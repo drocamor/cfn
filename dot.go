@@ -1,14 +1,26 @@
 package main
 
 import (
+	"code.google.com/p/gographviz"
 	"fmt"
 	"github.com/codegangsta/cli"
 	"github.com/drocamor/cfn/cloudformation"
+"strings"
 )
 
 func dot(c *cli.Context) {
 
-	fmt.Println("Making dot from: ", c.Args()[0])
-	template := cloudformation.LoadTemplate(c.Args()[0])
-	fmt.Printf("Template description is: %s\n", template.Description)
+	g := gographviz.NewGraph()
+	g.SetName("G")
+	g.SetDir(true)
+	for _, file := range c.Args() {
+		name := strings.Split(file, ".")[0]
+		template := cloudformation.LoadTemplate(file)
+	
+		g.AddNode("G", name, template.GraphvizAttrs())
+	}
+	
+
+	s := g.String()
+	fmt.Println(s)
 }

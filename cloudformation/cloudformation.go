@@ -42,24 +42,57 @@ func LoadTemplate(path string) (t CloudFormationTemplate) {
 	return t
 }
 
+func max(nums ...int) (n int) {
+	n = nums[0]
+	for _, i := range nums {
+		if i > n {
+			n = i
+		}
+	}
+	return n
+}
+
 func (t *CloudFormationTemplate) GraphvizAttrs(name string) (ret map[string]string) {
+
+	maxRows := max(len(t.Parameters), len(t.Resources), len(t.Outputs))
+
+	// Parameters
 
 	params := "{ Parameters"
 	for p, _ := range t.Parameters {
 		params = fmt.Sprintf("%s | %s", params, p)
 	}
+
+	for i := 0; i < maxRows-len(t.Parameters); i++ {
+		params = fmt.Sprintf("%s | ", params)
+	}
+
 	params = fmt.Sprintf("%s }", params)
+
+	// Resources
 
 	resources := "{ Resources"
 	for p, _ := range t.Resources {
 		resources = fmt.Sprintf("%s | %s", resources, p)
 	}
+
+	for i := 0; i < maxRows-len(t.Resources); i++ {
+		resources = fmt.Sprintf("%s | ", resources)
+	}
+
 	resources = fmt.Sprintf("%s }", resources)
+
+	// Outputs
 
 	outputs := "{ Outputs"
 	for p, _ := range t.Outputs {
 		outputs = fmt.Sprintf("%s | %s", outputs, p)
 	}
+
+	for i := 0; i < maxRows-len(t.Outputs); i++ {
+		outputs = fmt.Sprintf("%s | ", outputs)
+	}
+
 	outputs = fmt.Sprintf("%s }", outputs)
 
 	ret = map[string]string{

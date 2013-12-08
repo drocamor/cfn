@@ -60,7 +60,7 @@ func (t *CloudFormationTemplate) GraphvizAttrs(name string) (ret map[string]stri
 
 	params := "{ Parameters"
 	for p, _ := range t.Parameters {
-		params = fmt.Sprintf("%s | %s", params, p)
+		params = fmt.Sprintf("%s | <P_%s> %s", params, p, p)
 	}
 
 	for i := 0; i < maxRows-len(t.Parameters); i++ {
@@ -72,8 +72,8 @@ func (t *CloudFormationTemplate) GraphvizAttrs(name string) (ret map[string]stri
 	// Resources
 
 	resources := "{ Resources"
-	for p, _ := range t.Resources {
-		resources = fmt.Sprintf("%s | %s", resources, p)
+	for r, _ := range t.Resources {
+		resources = fmt.Sprintf("%s | %s", resources, r)
 	}
 
 	for i := 0; i < maxRows-len(t.Resources); i++ {
@@ -85,8 +85,8 @@ func (t *CloudFormationTemplate) GraphvizAttrs(name string) (ret map[string]stri
 	// Outputs
 
 	outputs := "{ Outputs"
-	for p, _ := range t.Outputs {
-		outputs = fmt.Sprintf("%s | %s", outputs, p)
+	for o, _ := range t.Outputs {
+		outputs = fmt.Sprintf("%s | <O_%s> %s", outputs, o, o)
 	}
 
 	for i := 0; i < maxRows-len(t.Outputs); i++ {

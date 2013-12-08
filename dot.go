@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/codegangsta/cli"
 	"github.com/drocamor/cfn/cloudformation"
-"strings"
+	"strings"
 )
 
 func dot(c *cli.Context) {
@@ -16,10 +16,9 @@ func dot(c *cli.Context) {
 	for _, file := range c.Args() {
 		name := strings.Split(file, ".")[0]
 		template := cloudformation.LoadTemplate(file)
-	
-		g.AddNode("G", name, template.GraphvizAttrs())
+
+		g.AddNode("G", name, template.GraphvizAttrs(name))
 	}
-	
 
 	s := g.String()
 	fmt.Println(s)

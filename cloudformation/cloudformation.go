@@ -42,10 +42,30 @@ func LoadTemplate(path string) (t CloudFormationTemplate) {
 	return t
 }
 
-func (t *CloudFormationTemplate) GraphvizAttrs() (ret map[string]string) {
-	ret = map[string]string {
-		"shape": "record",
-		"label": "\"<f0> inputs | { resource 1 | 2 | 3 } | outputs\"",
+func (t *CloudFormationTemplate) GraphvizAttrs(name string) (ret map[string]string) {
+
+	params := "{ Parameters"
+	for p, _ := range t.Parameters {
+		params = fmt.Sprintf("%s | %s", params, p)
+	}
+	params = fmt.Sprintf("%s }", params)
+
+	resources := "{ Resources"
+	for p, _ := range t.Resources {
+		resources = fmt.Sprintf("%s | %s", resources, p)
+	}
+	resources = fmt.Sprintf("%s }", resources)
+
+	outputs := "{ Outputs"
+	for p, _ := range t.Outputs {
+		outputs = fmt.Sprintf("%s | %s", outputs, p)
+	}
+	outputs = fmt.Sprintf("%s }", outputs)
+
+	ret = map[string]string{
+		"shape":    "record",
+		"fontname": "Courier",
+		"label":    fmt.Sprintf("\"{ %s | { %s | %s | %s}}\"", name, params, resources, outputs),
 	}
 
 	return ret

@@ -12,7 +12,7 @@ type CloudFormationOutput struct {
 }
 
 type CloudFormationParameter struct {
-	Default     string
+	Default     interface{}
 	Description string
 	Type        string
 }
@@ -98,7 +98,7 @@ func (t *CloudFormationTemplate) GraphvizAttrs(name string) (ret map[string]stri
 	ret = map[string]string{
 		"shape":    "record",
 		"fontname": "Courier",
-		"label":    fmt.Sprintf("\"{ %s | { %s | %s | %s}}\"", name, params, resources, outputs),
+		"label": fmt.Sprintf("\" %s |{ %s | %s | %s}\"", name, params, resources, outputs),
 	}
 
 	return ret

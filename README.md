@@ -1,0 +1,1 @@
+I decided to make one program that does all my CloudFormation stuff. More to come.
